@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/header";
+import Events from "./components/events/events";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Header branding="Find My Events" />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Events} />
+            </Switch>
+          </div>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
