@@ -1,31 +1,19 @@
 import React, { Component } from "react";
 import Event from "./event";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getEvents } from "../../actions/eventActions";
 
 class Events extends Component {
-  state = {
-    events: [
-      {
-        id: 1,
-        name: "Carnival",
-        date: "28-4-20",
-        time: "20:30 hours",
-        desc: "somthing about Carnival",
-      },
-      {
-        id: 2,
-        name: "Hanabi",
-        date: "30-4-20",
-        time: "10:30 hours",
-        desc: "Fireworks festival",
-      },
-    ],
-  };
+  componentDidMount() {
+    this.props.getEvents();
+  }
 
   render() {
-    const { events } = this.state;
+    const { events } = this.props;
     return (
       <React.Fragment>
-        <h1 className="display-4 mb-2">Upcoming Events</h1>
+        <h1 className="display-4 mb-2">Upcoming Events!!</h1>
         {events.map((event) => (
           <Event key={event.id} event={event} />
         ))}
@@ -34,4 +22,13 @@ class Events extends Component {
   }
 }
 
-export default Events;
+Events.propTypes = {
+  event: PropTypes.array.isRequired,
+  getContacts: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  events: state.event.events,
+});
+
+export default connect(mapStateToProps, { getEvents })(Events);

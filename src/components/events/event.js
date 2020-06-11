@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { deleteEvent } from "../../actions/eventActions";
 //import { Link } from "react-router-dom";
 
 class Event extends Component {
@@ -7,8 +9,12 @@ class Event extends Component {
     showEventInfo: false,
   };
 
+  onDeleteClick = (id) => {
+    this.props.deleteEvent(id);
+  };
+
   render() {
-    const { name, date, time, desc } = this.props.event;
+    const { id, name, date, time, desc } = this.props.event;
     const { showEventInfo } = this.state;
 
     return (
@@ -21,8 +27,13 @@ class Event extends Component {
                 showEventInfo: !this.state.showEventInfo,
               })
             }
-            className="fas fa-sort-down"
+            className="fas fa-angle-double-down"
             style={{ cursor: "pointer" }}
+          />
+          <i
+            className="fas fa-times"
+            style={{ cursor: "pointer", float: "right", color: "red" }}
+            onClick={this.onDeleteClick.bind(this, id)}
           />
         </h3>
         {showEventInfo ? (
@@ -39,6 +50,7 @@ class Event extends Component {
 
 Event.propTypes = {
   event: PropTypes.object.isRequired,
+  deleteEvent: PropTypes.func.isRequired,
 };
 
-export default Event;
+export default connect(null, { deleteEvent })(Event);
